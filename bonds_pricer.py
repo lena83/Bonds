@@ -1,4 +1,25 @@
+import datetime
+from dataclasses import dataclass, field
+from typing import List
+
 import QuantLib as ql
+
+@dataclass
+class BondSchedule:
+    frequency: int
+    maturity: datetime
+    issue_date: datetime
+
+    @classmethod
+    def CreateSchedule(cls) -> List[datetime]:
+        schedule = []
+        coupon_payment = cls.issue_date
+        while coupon_payment < cls.maturity:
+            coupon_payment = coupon_payment + datetime.timedelta(months=12//cls.frequency)
+            schedule.append(coupon_payment)
+
+        return schedule
+
 
 
 class FixedRateBondHelper:

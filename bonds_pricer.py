@@ -3,19 +3,21 @@ from dataclasses import dataclass, field
 from typing import List
 
 import QuantLib as ql
+from dateutil.relativedelta import relativedelta
+
 
 @dataclass
 class BondSchedule:
     frequency: int
-    maturity: datetime
-    issue_date: datetime
+    maturity: datetime.date
+    issue_date: datetime.date
 
-    @classmethod
-    def CreateSchedule(cls) -> List[datetime]:
+    def CreateSchedule(self) -> List[datetime.date]:
         schedule = []
-        coupon_payment = cls.issue_date
-        while coupon_payment < cls.maturity:
-            coupon_payment = coupon_payment + datetime.timedelta(months=12//cls.frequency)
+        coupon_payment = self.issue_date
+        offset = int(12/self.frequency)
+        while coupon_payment < self.maturity:
+            coupon_payment = coupon_payment + relativedelta(months=offset)
             schedule.append(coupon_payment)
 
         return schedule

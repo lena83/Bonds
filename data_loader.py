@@ -15,8 +15,8 @@ BondsSchema = pa.DataFrameSchema(
         "Nominal":   Column(pa.Float64, Check.gt(0), nullable=False),
         "Coupon":    Column(pa.Float64, Check.ge(0), nullable=False),
         "Frequency": Column(pa.Int64, Check.isin({1, 2, 4, 12}), nullable=False),  # annual, semi, quarterly, monthly
-        "IssueDate": Column(pa.DateTime, nullable=False),
-        "Maturity":  Column(pa.DateTime, nullable=False),
+        "IssueDate": Column(pa.Date, nullable=False),
+        "Maturity":  Column(pa.Date, nullable=False),
         "YTD":       Column(pa.Float64, nullable=False),
     },
 
